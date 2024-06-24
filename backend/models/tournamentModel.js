@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const tournamentSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, "name is required"],
   },
   date: {
     type: Date,
-    required: true,
+    required: [true, "date is required"],
   },
   location: {
     type: String,
-    required: true,
+    required: [true, "location is required"],
   },
   teams: [
     {
@@ -22,7 +22,7 @@ const tournamentSchema = new mongoose.Schema({
   organizer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    required: [true, "organizer is required"],
   },
 }, { timestamps: true });
 
