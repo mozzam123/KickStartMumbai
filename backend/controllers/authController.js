@@ -2,8 +2,7 @@ const User = require("./../models/userModel");
 
 // To Create user
 exports.createUser = async (req, res) => {
-  const name = req.body.name;
-  const password = req.body.password;
+  const { name, password } = req.body;
   const existingUser = await User.findOne({ name: name });
 
   if (existingUser) {
@@ -17,6 +16,8 @@ exports.createUser = async (req, res) => {
   if (!password) {
     return res.status(404).json({ error: "password field is not provided" });
   }
+  const userData = { name, password };
+
   try {
     await new User({
       name: name,
@@ -31,3 +32,17 @@ exports.createUser = async (req, res) => {
 
   res.json({ msg: "User Created" });
 };
+
+
+
+// Get all Users
+exports.getAllUsers = async(req, res) =>{
+  try{
+    const allUsers =await User.find()
+  return res.json({"result": allUsers})
+  }
+  catch (err){
+    return res.json({error: err})
+  }
+  
+}
