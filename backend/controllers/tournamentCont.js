@@ -30,7 +30,7 @@ exports.CreateTournament = async (req, res) => {
       location: location,
     });
 
-    if (existingTournament) {
+    if (existingTournament.length > 0) {
       return res.status(400).json({ error: "Tournament already exist" });
     }
 
@@ -66,5 +66,24 @@ exports.getAllTournaments = async (req, res) => {
     return res.status(200).json(allTournaments)
   } catch (err) {
     return res.status(400).json({"error": err})
+  }
+};
+
+
+// Delete Tournament
+exports.deleteTournament = async (req, res) => {
+  try {
+    const tournamentId = req.params.id;
+    const existingTournament = await Tournament.findById(tournamentId);
+
+    if (!existingTournament) {
+      return res.status(404).json({ error: "Tournament not found" });
+    }
+
+    await Tournament.findByIdAndDelete(tournamentId);
+
+    return res.status(200).json({ message: "Tournament deleted successfully" });
+  } catch (err) {
+    return res.status(500).json({ error: "Server error" });
   }
 };
