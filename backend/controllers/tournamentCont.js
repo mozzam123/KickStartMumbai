@@ -1,6 +1,7 @@
 const Tournament = require("./../models/tournamentModel");
 const User = require("./../models/userModel");
 
+// Create Tournament
 exports.CreateTournament = async (req, res) => {
   const { name, date, location, organizer } = req.body;
 
@@ -58,17 +59,15 @@ exports.CreateTournament = async (req, res) => {
   }
 };
 
-
 // Get All Tournaments
 exports.getAllTournaments = async (req, res) => {
   try {
     allTournaments = await Tournament.find();
-    return res.status(200).json(allTournaments)
+    return res.status(200).json(allTournaments);
   } catch (err) {
-    return res.status(400).json({"error": err})
+    return res.status(400).json({ error: err });
   }
 };
-
 
 // Delete Tournament
 exports.deleteTournament = async (req, res) => {
@@ -85,5 +84,25 @@ exports.deleteTournament = async (req, res) => {
     return res.status(200).json({ message: "Tournament deleted successfully" });
   } catch (err) {
     return res.status(500).json({ error: "Server error" });
+  }
+};
+
+//Update Tournament
+exports.updateTournament = async (req, res) => {
+  try {
+    const tour = await Tournament.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      status: "Tournament Updated Successfully",
+      data: {
+        tour,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: error,
+    });
   }
 };
