@@ -43,7 +43,6 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-
 // Delete User
 exports.deleteUser = async (req, res) => {
   try {

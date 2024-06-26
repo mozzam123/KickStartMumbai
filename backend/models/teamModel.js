@@ -1,21 +1,29 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const teamSchema = new mongoose.Schema({
+const playerSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, "name field is required"],
   },
-  manager: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+  age: {
+    type: Number,
+    required: [true, "age field is required"],
   },
-  players: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
-  ],
-}, { timestamps: true });
+});
 
-module.exports = mongoose.model('Team', teamSchema);
+const teamSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "name field is required"],
+    },
+    manager: {
+      type: String,
+      required: [true, "manager field is required"],
+    },
+    players: [playerSchema],
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Team", teamSchema);
