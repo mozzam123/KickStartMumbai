@@ -1,5 +1,6 @@
 const Tournament = require("./../models/tournamentModel");
 const User = require("./../models/userModel");
+const Team = require("./../models/teamModel")
 
 // Create Tournament
 exports.CreateTournament = async (req, res) => {
@@ -62,7 +63,7 @@ exports.CreateTournament = async (req, res) => {
 // Get All Tournaments
 exports.getAllTournaments = async (req, res) => {
   try {
-    allTournaments = await Tournament.find();
+    const allTournaments = await Tournament.find().populate('teams', 'name');
     return res.status(200).json(allTournaments);
   } catch (err) {
     return res.status(400).json({ error: err });
@@ -100,6 +101,40 @@ exports.updateTournament = async (req, res) => {
         tour,
       },
     });
+  } catch (error) {
+    res.status(400).json({
+      error: error,
+    });
+  }
+};
+
+// Add Team to Tournament
+exports.AddTeamToTournament = async (req, res) => {
+  try {
+    const {teamId, tournamentId} = req.body
+
+    // Check if the tournament and team exist
+    const tournament = await Tournament.findById(tournamentId);
+    const team = await Team.findById(teamId);
+
+    if (!tournament) {
+      return res.status(404).json({ message: 'Tournament not found' });
+    }
+    if (!team) {
+      return res.status(404).json({ message: 'Team not found' });
+    }
+
+    // Check if the team is already added to the tournament
+    if (tournament.teams.includes(teamId)) {
+      return res.status(400).json({ message: 'Team is already registered for this tournament' });
+    }
+
+    // Add the team to the tournament
+    tournament.teams.push(teamId);
+    await tournament.save();
+
+    res.status(200).json({ message: 'Team added to tournament successfully'});
+
   } catch (error) {
     res.status(400).json({
       error: error,
