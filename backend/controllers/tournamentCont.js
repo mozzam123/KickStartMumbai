@@ -4,7 +4,7 @@ const Team = require("./../models/teamModel")
 
 // Create Tournament
 exports.CreateTournament = async (req, res) => {
-  const { name, date, location, organizer } = req.body;
+  const { name, date, location, organizer, match_type } = req.body;
 
   // Validate required fields
   if (!name || !date || !location || !organizer) {
@@ -42,6 +42,7 @@ exports.CreateTournament = async (req, res) => {
       date,
       location,
       organizer,
+      match_type
     });
 
     // Save the tournament to the database

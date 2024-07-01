@@ -9,6 +9,10 @@ const tournamentSchema = new mongoose.Schema({
     type: Date,
     required: [true, "date is required"],
   },
+  match_type: {
+    type: Number,
+    required: [true, "match_type is required"],
+  },
   location: {
     type: String,
     required: [true, "location is required"],
