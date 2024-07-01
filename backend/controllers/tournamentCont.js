@@ -118,6 +118,13 @@ exports.AddTeamToTournament = async (req, res) => {
     const tournament = await Tournament.findById(tournamentId);
     const team = await Team.findById(teamId);
 
+    if(team.players.length < tournament.match_type){
+      return res.status(400).json({"error": "Not enough players to participate in tournament."})
+    }
+
+    // console.log("****Team****");
+    // console.log(tournament.match_type)
+
     if (!tournament) {
       return res.status(404).json({ message: 'Tournament not found' });
     }
