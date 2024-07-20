@@ -33,16 +33,29 @@ exports.createUser = async (req, res) => {
   res.json({ msg: "User Created" });
 };
 
-
-
 // Get all Users
-exports.getAllUsers = async(req, res) =>{
-  try{
-    const allUsers =await User.find()
-  return res.json({"result": allUsers})
+exports.getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find();
+    return res.json({ result: allUsers });
+  } catch (err) {
+    return res.json({ error: err });
   }
-  catch (err){
-    return res.json({error: err})
+};
+
+// Delete User
+exports.deleteUser = async (req, res) => {
+  try {
+    const existingUser = await User.findById(req.params.id);
+
+    if (!existingUser) {
+      return res.json({ error: "User does not exist" });
+    }
+
+    await User.findByIdAndDelete(req.params.id);
+
+    return res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    return res.json({ error: err });
   }
-  
-}
+};
