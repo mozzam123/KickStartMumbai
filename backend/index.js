@@ -4,6 +4,9 @@ const mongoose = require("mongoose")
 const authRoutes = require('./routes/authRoutes');
 const tournamentRoutes = require("./routes/tournamentRoutes")
 const port = 9999
+require("dotenv").config()
+
+const DB = process.env.DB;
 
 
 // Middleware
