@@ -30,14 +30,13 @@ exports.createUser = async (req, res) => {
 
   console.log(`User saved with username: ${name}`);
 
-  res.json({ msg: "User Created" });
+  res.status(200).json({ msg: "User Created" });
 };
 
 // Login User
 exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-    console.log('run the login user endpoint');
 
     // Find the user by username
     const existingUser = await User.findOne({ name: username });
