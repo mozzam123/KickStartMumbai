@@ -3,6 +3,7 @@ const app = express()
 const mongoose = require("mongoose")
 const authRoutes = require('./routes/authRoutes');
 const tournamentRoutes = require("./routes/tournamentRoutes")
+const teamRoutes = require("./routes/teamRoutes")
 const port = 9999
 require("dotenv").config()
 

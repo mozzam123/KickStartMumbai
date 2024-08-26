@@ -33,6 +33,34 @@ exports.createUser = async (req, res) => {
   res.json({ msg: "User Created" });
 };
 
+// Login User
+exports.loginUser = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    console.log('run the login user endpoint');
+
+    // Find the user by username
+    const existingUser = await User.findOne({ name: username });
+
+    // Check if user exists
+    if (!existingUser) {
+      return res.status(404).json({ msg: "No user found" });
+    }
+
+    if (existingUser) {
+      if (existingUser.password != password) {
+        return res.status(400).json({ msg: "Password is not correct" });
+      }
+    }
+
+    // Return success response if user is found and password is correct
+    return res.status(200).json({ msg: "User authenticated successfully" });
+  } catch (err) {
+    console.error("Error during user login:", err);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // Get all Users
 exports.getAllUsers = async (req, res) => {
   try {

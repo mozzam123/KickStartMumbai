@@ -4,6 +4,7 @@ const auth = require("./../controllers/authController");
 
 router
   .post("/user", auth.createUser)
+  .post("/user/login", auth.loginUser)
   .get("/user", auth.getAllUsers)
   .delete("/user/:id", auth.deleteUser);
 
