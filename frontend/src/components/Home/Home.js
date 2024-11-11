@@ -1,9 +1,9 @@
 import React from "react";
 import { Container, Typography } from "@mui/material";
-import TournamentForm from "./TournamentForm";
-import TeamForm from "./TeamForm";
-import TournamentList from "./TournamentList";
-import TeamList from "./TeamList";
+// import TournamentForm from "./TournamentForm";
+// import TeamForm from "./TeamForm";
+// import TournamentList from "./TournamentList";
+// import TeamList from "./TeamList";
 
 function Home() {
   return (
@@ -12,18 +12,18 @@ function Home() {
         Football Tournament Manager
       </Typography>
 
-      <TournamentForm />
+      {/* <TournamentForm />
       <TeamForm />
 
       <Typography variant="h5" gutterBottom>
         Tournaments
       </Typography>
-      <TournamentList />
+      <TournamentList /> */}
 
       <Typography variant="h5" gutterBottom>
         Teams
       </Typography>
-      <TeamList />
+      {/* <TeamList /> */}
     </Container>
   );
 }

@@ -1,36 +1,40 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const response = await fetch('/api/user/login', { // Note: no http://localhost:3000
-        method: 'POST',
+      const response = await fetch("/api/user/login", {
+        // Note: no http://localhost:3000
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, password }),
       });
-      console.log('response status: ', response.status);
-  
-      if (!response.ok & response.status === 404) {
-        console.log('User not found');
+      console.log("response status: ", response.status);
+
+      if (!response.ok & (response.status === 404)) {
+        console.log("User not found");
         setError("User not found");
+      } else if (!response.ok & (response.status === 400)) {
+        console.log("password is not correct");
+        setError("password is not correct");
+      } else if (response.ok) {
+        console.log("Login successful");
+        navigate("/home");
       }
-      else if (!response.ok & response.status === 400){
-        console.log('password is not correct');
-        setError('password is not correct')
-      }
-      console.log('Login successfull !!!!!!!!!!');
       // Handle successful login (e.g., redirect)
     } catch (error) {
-      setError('Login failed. Please check your credentials and try again.');
+      setError("Login failed. Please check your credentials and try again.");
     }
   };
 
